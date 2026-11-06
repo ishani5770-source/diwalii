@@ -1,10 +1,10 @@
-
 name: demo
+
 on:
   push:
     branches:
       - main
-    workflow_dispatch:   
+  workflow_dispatch:
 
 permissions:
   id-token: write
@@ -37,18 +37,17 @@ jobs:
           IMAGE_TAG=$(git rev-parse --short "$GITHUB_SHA")
           ENV=prod
           BRANCH=${GITHUB_REF##*/}
-          
+
           docker build -f Dockerfile-$ENV --build-arg ARG_ENV=${ENV} -t $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH-$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH-$IMAGE_TAG
-          
-          # Direct file path update
+
           sed -i "s|CHANGE-IMAGE-NAME|$ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH-$IMAGE_TAG|g" manifest/prod/deployment.yaml
 
       - name: Update kubeconfig
         run: |
           aws eks update-kubeconfig --region us-east-1 --name eks-cluster
 
-      - name: Deploy to EKS with Customization
+      - name: Deploy to EKS
         run: |
           kubectl config use-context arn:aws:eks:us-east-1:762989750451:cluster/eks-cluster
           kubectl apply -f manifest/prod/namespace.yaml
