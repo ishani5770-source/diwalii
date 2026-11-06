@@ -8,8 +8,10 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internet-facing
     # Tells AWS to route traffic directly to pod IPs (EKS best practice)
     alb.ingress.kubernetes.io/target-type: ip
+    # Add your specific subnet IDs here, separated by commas
+    alb.ingress.kubernetes.io/subnets: subnet-00a98dd3d65548c31, subnet-0cc42434c0ef1298f
 spec:
-  ingressClassName: alb # CRITICAL: This replaces the deprecated annotation
+  ingressClassName: alb
   rules:
     - http:
         paths:
