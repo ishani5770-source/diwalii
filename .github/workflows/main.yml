@@ -38,7 +38,7 @@ jobs:
           ENV=prod
           BRANCH=${GITHUB_REF##*/}
 
-          docker build -f Dockerfile-$ENV --build-arg ARG_ENV=${ENV} -t $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH-$IMAGE_TAG .
+          docker build -f Dockerfile --build-arg ARG_ENV=${ENV} -t $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH-$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH-$IMAGE_TAG
 
           sed -i "s|CHANGE-IMAGE-NAME|$ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH-$IMAGE_TAG|g" manifest/prod/deployment.yaml
