@@ -41,7 +41,7 @@ jobs:
           docker build -f Dockerfile --build-arg ARG_ENV=${ENV} -t $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH-$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH-$IMAGE_TAG
 
-          sed -i "s|CHANGE-IMAGE-NAME|$ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH-$IMAGE_TAG|g" manifest/deployment.yaml
+          sed -i "s|CHANGE-IMAGE-NAME|$ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH-$IMAGE_TAG|g" maifest/deployment.yaml
 
       - name: Update kubeconfig
         run: |
@@ -50,8 +50,8 @@ jobs:
       - name: Deploy to EKS
         run: |
           kubectl config use-context arn:aws:eks:us-east-1:762989750451:cluster/eks-cluster
-          kubectl apply -f manifest/namespace.yaml
-          kubectl apply -f manifest/deployment.yaml
-          kubectl apply -f manifest/service.yaml
-          kubectl apply -f manifest/ingress.yaml
+          kubectl apply -f maifest/namespace.yaml
+          kubectl apply -f maifest/deployment.yaml
+          kubectl apply -f maifest/service.yaml
+          kubectl apply -f maifest/ingress.yaml
           kubectl get svc -n demo
