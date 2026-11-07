@@ -11,7 +11,7 @@ metadata:
     # Explicitly defines your VPC ID to prevent auto-discovery errors
     alb.ingress.kubernetes.io/vpc-id: vpc-00270fe29012f81bf
     # Explicitly defines your public subnet IDs
-    alb.ingress.kubernetes.io/subnets: subnet-00a98dd365548c31, subnet-0cc42434c0ef1298f
+    alb.ingress.kubernetes.io/subnets: subnet-00a98dd3d65548c31, subnet-0cc42434c0ef1298f
 spec:
   ingressClassName: alb
   rules:
